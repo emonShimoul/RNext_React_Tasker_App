@@ -1,10 +1,15 @@
 import "./App.css";
+import Footer from "./Footer";
+import Header from "./Header";
+import Hero from "./Hero";
 
 function App() {
   return (
-    <div className="text-center mt-10 text-red-500 text-3xl font-bold">
-      Hello Tasker
-    </div>
+    <>
+      <Header />
+      <Hero />
+      <Footer />
+    </>
   );
 }
 
