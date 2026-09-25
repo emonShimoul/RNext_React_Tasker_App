@@ -4,15 +4,19 @@ const handleSubmit = (e) => {
   e.preventDefault();
 };
 
-const AddTaskModal = ({ onSave }) => {
-  const [task, setTask] = useState({
-    id: crypto.randomUUID(),
-    title: "",
-    description: "",
-    tags: [],
-    priority: "",
-    isFavourite: false,
-  });
+const AddTaskModal = ({ onSave, taskToUpdate }) => {
+  const [task, setTask] = useState(
+    taskToUpdate || {
+      id: crypto.randomUUID(),
+      title: "",
+      description: "",
+      tags: [],
+      priority: "",
+      isFavourite: false,
+    },
+  );
+
+  const [isAdd, setIsAdd] = useState(Object.is(taskToUpdate, null));
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -34,7 +38,7 @@ const AddTaskModal = ({ onSave }) => {
         className="my-10 w-full max-w-185 rounded-xl border border-[#FEFBFB]/36 bg-[#191D26] p-9 max-md:px-4 lg:my-20 lg:p-11 z-10 absolute top-1/4 left-1/2 -translate-x-1/2"
       >
         <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
-          Add New Task
+          {isAdd ? "Add New Task" : "Edit Task"}
         </h2>
 
         <div className="space-y-9 text-white lg:space-y-10">
@@ -99,7 +103,7 @@ const AddTaskModal = ({ onSave }) => {
           <button
             type="submit"
             className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
-            onClick={() => onSave(task)}
+            onClick={() => onSave(task, isAdd)}
           >
             Save
           </button>
