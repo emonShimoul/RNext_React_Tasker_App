@@ -40,14 +40,13 @@ const TaskBoard = () => {
     setShowAddModal(true);
   }
 
-  function handleSearch(searchTerm) {
-    console.log(searchTerm);
+  function handleDeleteTask(taskId) {
+    const tasksAfterDelete = tasks.filter((task) => task.id !== taskId);
+    setTasks(tasksAfterDelete);
+  }
 
-    const filtered = tasks.filter((task) =>
-      task.title.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    setTasks([...filtered]);
+  function handleDeleteAllClick() {
+    setTasks([]);
   }
 
   function handleCloseClick() {
@@ -69,8 +68,15 @@ const TaskBoard = () => {
           <SearchTask />
         </div>
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-          <TaskActions onAddClick={() => setShowAddModal(true)} />
-          <TaskList tasks={tasks} onEdit={handleEditTask} />
+          <TaskActions
+            onAddClick={() => setShowAddModal(true)}
+            onDeleteAllClick={handleDeleteAllClick}
+          />
+          <TaskList
+            tasks={tasks}
+            onEdit={handleEditTask}
+            onDelete={handleDeleteTask}
+          />
         </div>
       </div>
     </section>
