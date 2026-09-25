@@ -17,7 +17,7 @@ const TaskBoard = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [taskToUpdate, setTaskToUpdate] = useState(null);
 
-  function handleAddTask(newTask, isAdd) {
+  function handleAddEditTask(newTask, isAdd) {
     if (isAdd) {
       setTasks([...tasks, newTask]);
     } else {
@@ -32,6 +32,7 @@ const TaskBoard = () => {
     }
 
     setShowAddModal(false);
+    setTaskToUpdate(null);
   }
 
   function handleEditTask(task) {
@@ -39,10 +40,29 @@ const TaskBoard = () => {
     setShowAddModal(true);
   }
 
+  function handleSearch(searchTerm) {
+    console.log(searchTerm);
+
+    const filtered = tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    setTasks([...filtered]);
+  }
+
+  function handleCloseClick() {
+    setShowAddModal(false);
+    setTaskToUpdate(null);
+  }
+
   return (
     <section className="mb-20" id="tasks">
       {showAddModal && (
-        <AddTaskModal onSave={handleAddTask} taskToUpdate={taskToUpdate} />
+        <AddTaskModal
+          onSave={handleAddEditTask}
+          taskToUpdate={taskToUpdate}
+          onCloseClick={handleCloseClick}
+        />
       )}
       <div className="container">
         <div className="p-2 flex justify-end">
