@@ -49,6 +49,25 @@ const TaskBoard = () => {
     setTasks([]);
   }
 
+  function handleFavourite(taskId) {
+    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    const newTasks = [...tasks];
+
+    newTasks[taskIndex].isFavourite = !newTasks[taskIndex].isFavourite;
+
+    setTasks(newTasks);
+  }
+
+  //   function handleSearch(searchTerm) {
+  //     console.log(searchTerm);
+
+  //     const filtered = tasks.filter((task) =>
+  //       task.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  //     );
+
+  //     setTasks([...filtered]);
+  //   }
+
   function handleCloseClick() {
     setShowAddModal(false);
     setTaskToUpdate(null);
@@ -76,6 +95,7 @@ const TaskBoard = () => {
             tasks={tasks}
             onEdit={handleEditTask}
             onDelete={handleDeleteTask}
+            onFav={handleFavourite}
           />
         </div>
       </div>
